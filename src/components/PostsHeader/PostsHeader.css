@@ -1,0 +1,4 @@
+.PostsHeader {
+  display: flex;
+  justify-content: space-between;
+}
