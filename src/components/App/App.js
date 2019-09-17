@@ -4,12 +4,14 @@ import FooterInfo from '../FooterInfo/FooterInfo';
 import AppHeader from '../AppHeader/AppHeader';
 import PostsHeader from '../PostsHeader/PostsHeader';
 import BlogPost from '../BlogPost/BlogPost';
+import PhotoCarousel from '../PhotoCarousel/PhotoCarousel';
 // import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher'
 import './App.css';
-import PhotoCarousel from '../PhotoCarousel/PhotoCarousel';
-import burger from '../../images/burger.jpg'
-import healthy from '../../images/healthy_food.jpg'
-import italian from '../../images/italian_food.jpg'
+
+import KoreanFood from '../../images/korean.jpg';
+import HealthyFood from '../../images/healthy_v2.jpg';
+import Fruits from '../../images/fruits_veggies.jpg';
+
 
 function App() {
   return (
@@ -21,9 +23,9 @@ function App() {
             <Switch>
               <Route exact path="/" component={CarouselContainer}/>
               <Route path="/bio" component={AboutMe} />
-              <Route path="/posts" component={Posts} />
+              <Route path="/posts" component={Posts}/>
             </Switch>
-          </div>
+          </div>       
         </main>
         <footer className="App-footer">
           <FooterInfo />
@@ -49,23 +51,25 @@ class AboutMe extends React.Component {
 
 class CarouselContainer extends React.Component {
   render() {
-    const imgURLsArray = [burger, healthy, italian];
+    const imgURLsArray = [KoreanFood, HealthyFood, Fruits];
 
     return (
-      <div>
+      <div className="CarouselContainer">
+        <h2>Portfolio</h2>
         <PhotoCarousel imgURLs={imgURLsArray}/>
       </div>
     );
   }
 }
 
-class LandingPage extends React.Component {
-  render() {
-    return (
-      <h2>Homepage!</h2>
-    );
-  }
-}
+// Placeholder class for Homepage
+// class LandingPage extends React.Component {
+//   render() {
+//     return (
+//       <h2>Homepage!</h2>
+//     );
+//   }
+// }
 
 class Posts extends React.Component {
   render() {

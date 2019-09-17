@@ -1,5 +1,5 @@
-html, body, #container, .carousel {
-	height:100%;
+.carousel {
+	height: 80vh;
 	margin: 0;
 	width: 100%;
 }
@@ -10,8 +10,13 @@ html, body, #container, .carousel {
   transition: background-image .3s ease-in-out;
 }
 
+.image-slide img {
+	height: 100%;
+	width: 100%;
+}
+
 .slide-arrow {
-	color: blue;
+	color:black;
 	cursor: pointer;
 	font-size: 2rem;
 	position: fixed;

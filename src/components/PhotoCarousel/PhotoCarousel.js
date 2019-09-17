@@ -27,7 +27,7 @@ class PhotoCarousel extends React.Component {
     const needsReset = currIndex === resetValueChk;
     
     const newIndex = needsReset ? (lastIndex - resetValueChk) : currIndex + increment_val;
-    console.log("new index: " + newIndex);
+    // console.log("new index: " + newIndex);
 
     return newIndex;
   }
@@ -52,7 +52,7 @@ class PhotoCarousel extends React.Component {
 
   render() {
     return (
-      <div className="PhotoCarousel">
+      <div className="carousel">
         <Arrow 
         direction="left"
         clickFunction={this.previousSlide}
