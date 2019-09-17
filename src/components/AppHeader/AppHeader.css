@@ -3,9 +3,52 @@
   min-height: 10vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
   text-align: center;
+}
+
+h1 {
+  padding: 1em 0;
+}
+
+nav {
+  background-color: rgb(50, 116, 116);
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  float: left;
+}
+
+nav ul li a {
+  display: block;
+  padding: 10px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  font-size: 1.5rem;
+}
+
+nav ul li a:hover {
+  text-decoration: none;
+  color: white;
+  animation-duration: 1s;
+  animation-name: darken;
+  animation-fill-mode: forwards;
+}
+
+@keyframes darken {
+  from {
+    color: white;
+  }
+
+  to {
+    color: black;
+  }
 }

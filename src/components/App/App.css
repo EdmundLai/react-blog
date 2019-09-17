@@ -8,11 +8,16 @@ h3 {
   font-size: 1.5em;
 }
 
-.BodyContainer {
+.Body {
   display: flex;
   justify-content: center;
   background-color: #c8e0d2;
   min-height: 80vh;
+}
+
+.BodyContainer {
+  width: 60vw;
+  margin: 2%;
 }
 
 .App-footer {
