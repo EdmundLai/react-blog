@@ -13,11 +13,7 @@
 
 .BodyContainer {
   width: 70vw;
-  margin: 2%;
-}
-
-.BioContent {
-  display: flex;
+  margin: 2% 0;
 }
 
 .App-footer {
