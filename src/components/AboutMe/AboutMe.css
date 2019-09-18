@@ -1,0 +1,15 @@
+.BioContent {
+  display: flex;
+}
+
+.BioPortrait {
+  margin: 0 1%;
+}
+
+.BioDescription {
+  margin-right: 1%;
+}
+
+.BioPortrait img {
+  max-height: 60vh;
+}

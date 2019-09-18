@@ -4,14 +4,11 @@ import FooterInfo from '../FooterInfo/FooterInfo';
 import AppHeader from '../AppHeader/AppHeader';
 import PostsHeader from '../PostsHeader/PostsHeader';
 import BlogPost from '../BlogPost/BlogPost';
-import PhotoCarousel from '../PhotoCarousel/PhotoCarousel';
+import AboutMe from '../AboutMe/AboutMe'
+import CarouselContainer from '../CarouselContainer/CarouselContainer'
+
 // import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher'
 import './App.css';
-
-import KoreanFood from '../../images/korean.jpg';
-import HealthyFood from '../../images/healthy_v2.jpg';
-import Fruits from '../../images/fruits_veggies.jpg';
-
 
 function App() {
   return (
@@ -34,42 +31,6 @@ function App() {
     </Router>
   );
 }
-
-class AboutMe extends React.Component {
-  render() {
-    return (
-      <div className="AboutMe">
-        <h2>Hi, I'm Test User</h2>
-        {/* Using text from Bacon Lorum Ipsum */}
-        <div>Spicy jalapeno bacon ipsum dolor amet tri-tip hamburger beef tongue prosciutto pig shank. Salami cupidatat shoulder pork loin. Meatball shankle short ribs culpa alcatra tail flank ribeye. Consectetur eu jerky, ut pastrami fugiat buffalo duis nulla shoulder esse aliquip incididunt deserunt.</div>
-        <div>Short loin enim sint non, pork belly elit quis kielbasa sunt pancetta dolor ea est. Cupidatat ribeye tri-tip swine leberkas consectetur cow fatback ipsum. Turducken culpa boudin, brisket incididunt buffalo tongue alcatra frankfurter magna capicola exercitation pariatur. Nostrud laboris venison non cow sunt tenderloin picanha est flank tri-tip in. Eiusmod cillum venison commodo et fatback ipsum.</div>
-      </div>
-      
-    );
-  }
-}
-
-class CarouselContainer extends React.Component {
-  render() {
-    const imgURLsArray = [KoreanFood, HealthyFood, Fruits];
-
-    return (
-      <div className="CarouselContainer">
-        <h2>Portfolio</h2>
-        <PhotoCarousel imgURLs={imgURLsArray}/>
-      </div>
-    );
-  }
-}
-
-// Placeholder class for Homepage
-// class LandingPage extends React.Component {
-//   render() {
-//     return (
-//       <h2>Homepage!</h2>
-//     );
-//   }
-// }
 
 class Posts extends React.Component {
   render() {

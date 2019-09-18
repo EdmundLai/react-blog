@@ -1,4 +1,5 @@
 .carousel {
+	display: flex;
 	height: 80vh;
 	margin: 0;
 	width: 100%;
@@ -7,12 +8,13 @@
 .image-slide {
 	height: 100%;
 	width: 100%;
-  transition: background-image .3s ease-in-out;
+	background-color:black;
+	text-align: center;
 }
 
 .image-slide img {
 	height: 100%;
-	width: 100%;
+	width: auto;
 }
 
 .slide-arrow {
