@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 import './PostsHeader.css';
 
 class PostsHeader extends React.Component {
@@ -6,7 +7,9 @@ class PostsHeader extends React.Component {
     return (
       <div className="PostsHeader">
         <h2>All Posts</h2>
-        <button>New Post...</button>
+        <Link to="/create">
+          <button>New Post...</button>
+        </Link>
       </div>
     );
   }
