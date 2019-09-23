@@ -4,9 +4,10 @@ import FooterInfo from '../FooterInfo/FooterInfo';
 import AppHeader from '../AppHeader/AppHeader';
 import PostsHeader from '../PostsHeader/PostsHeader';
 import BlogPost from '../BlogPost/BlogPost';
-import AboutMe from '../AboutMe/AboutMe'
-import CreatePostForm from '../CreatePostForm/CreatePostForm'
-import CarouselContainer from '../CarouselContainer/CarouselContainer'
+import AboutMe from '../AboutMe/AboutMe';
+import CreatePostForm from '../CreatePostForm/CreatePostForm';
+import CarouselContainer from '../CarouselContainer/CarouselContainer';
+import RequestHandler from '../RequestHandler/RequestHandler';
 
 // import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher'
 import './App.css';
@@ -40,6 +41,7 @@ class App extends React.Component {
                 <Route path="/bio" component={AboutMe} />
                 <Route path="/posts" render={(props) => <Posts {...props} postsArray={this.state.posts}/>}/>
                 <Route path="/create" render={(props) => <CreatePostForm {...props} addToPosts={this.addPost} />} />
+                <Route path="/api-test" component={RequestHandler} />
               </Switch>
             </div>       
           </main>
