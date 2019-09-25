@@ -1,5 +1,6 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
+import {getDateAsString} from '../../utils/DateUtils';
 import './CreatePostForm.css';
 
 class CreatePostForm extends React.Component {
@@ -12,12 +13,14 @@ class CreatePostForm extends React.Component {
         author: "",
         description: "",
         content: "",
+        date: ""
       },
       goToPosts: false
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.setPostDate = this.setPostDate.bind(this);
   }
 
   handleInputChange(event) {
@@ -25,13 +28,29 @@ class CreatePostForm extends React.Component {
     const value = target.value;
     const name = target.name;
 
-    this.setState({
-      [name]: value
-    });
+    // Creates copy of previous state and modifies copy to be assigned to new state
+    this.setState(prevState => {
+      let post = Object.assign({}, prevState.post);
+      post[name] = value;
+      return { post };
+    }
+    );
+
+    this.setPostDate();
+  }
+
+  setPostDate() {
+    let currentDate = getDateAsString();
+    this.setState(prevState => {
+      let post = Object.assign({}, prevState.post);
+      post.date = currentDate;
+      return { post };
+    }
+    );
   }
 
   handleSubmit(event) {
-    this.props.addToPosts(this.state);
+    this.props.addToPosts(this.state.post);
     this.setState({
       goToPosts: true
     });
@@ -48,25 +67,25 @@ class CreatePostForm extends React.Component {
         <Input
           label="Post Title"
           name="title"
-          value={this.state.title}
+          value={this.state.post.title}
           onChange={this.handleInputChange}
         />
         <Input
           label="Author"
           name="author"
-          value={this.state.author}
+          value={this.state.post.author}
           onChange={this.handleInputChange}
         />
         <TextArea
           label="Subtitle"
           name="description"
-          value={this.state.description}
+          value={this.state.post.description}
           onChange={this.handleInputChange}
         />
         <TextArea
           label="Post Content"
           name="content"
-          value={this.state.content}
+          value={this.state.post.content}
           onChange={this.handleInputChange}
         />
         <input type="submit" value="Add Post"/>

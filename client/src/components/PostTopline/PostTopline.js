@@ -11,6 +11,7 @@ class PostTopline extends React.Component {
           articleAuthor={this.props.postAuthor}
           articleDate={this.props.postDate}
         />
+        <p>{this.props.postDescription}</p>
       </div>
     );
   }

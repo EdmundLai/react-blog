@@ -11,6 +11,7 @@ class BlogPost extends React.Component {
         postTitle={this.props.title}
         postAuthor={this.props.author}
         postDate={this.props.date}
+        postDescription={this.props.description}
         />
         <PostArticle postContent={this.props.content}/>
       </div>

@@ -9,7 +9,6 @@ import CreatePostForm from '../CreatePostForm/CreatePostForm';
 import CarouselContainer from '../CarouselContainer/CarouselContainer';
 import RequestHandler from '../RequestHandler/RequestHandler';
 
-// import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher'
 import './App.css';
 
 class App extends React.Component {
@@ -42,8 +41,9 @@ class App extends React.Component {
                 <Route path="/posts" render={(props) => <Posts {...props} postsArray={this.state.posts}/>}/>
                 <Route path="/create" render={(props) => <CreatePostForm {...props} addToPosts={this.addPost} />} />
                 <Route path="/api-test" component={RequestHandler} />
+                <Route component={NotFound} />
               </Switch>
-            </div>       
+            </div>
           </main>
           <footer className="App-footer">
             <FooterInfo />
@@ -52,8 +52,6 @@ class App extends React.Component {
       </Router>
     );
   }
-    
-  
 }
 
 class Posts extends React.Component {
@@ -61,8 +59,23 @@ class Posts extends React.Component {
     return (
       <div className="Posts">
         <PostsHeader />
-        {this.props.postsArray.map(
-          (post) => <BlogPost title={post.title} author={post.author} date="January 1, 2000" content={post.content}/>)}
+        {this.props.postsArray.map((post) => 
+          <BlogPost 
+          title={post.title} 
+          author={post.author} 
+          date={post.date}
+          description={post.description}
+          content={post.content}/>)}
+      </div>
+    );
+  }
+}
+
+class NotFound extends React.Component {
+  render() {
+    return(
+      <div className="NotFound">
+        <h2>404 PAGE NOT FOUND</h2>
       </div>
     );
   }
