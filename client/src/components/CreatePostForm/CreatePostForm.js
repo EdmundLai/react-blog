@@ -1,6 +1,7 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
 import {getDateAsString} from '../../utils/DateUtils';
+import RequestHandler from '../RequestHandler/RequestHandler';
 import './CreatePostForm.css';
 
 class CreatePostForm extends React.Component {
@@ -45,12 +46,19 @@ class CreatePostForm extends React.Component {
       let post = Object.assign({}, prevState.post);
       post.date = currentDate;
       return { post };
-    }
-    );
+    });
   }
 
   handleSubmit(event) {
-    this.props.addToPosts(this.state.post);
+    // using database instead of client storage
+    // this.props.addToPosts(this.state.post);
+
+    // Handling HTTP POST Request
+    RequestHandler.sendCreatePost(this.state.post)
+    .then(response => {
+      this.props.callback();
+    });
+
     this.setState({
       goToPosts: true
     });

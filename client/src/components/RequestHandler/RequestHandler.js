@@ -1,30 +1,22 @@
-import React from 'react';
+import axios from 'axios';
 
-class RequestHandler extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      message: []
-    };
+class RequestHandler {
+  static sendCreatePost(postObject) {
+    return axios.post('http://localhost:3000/api/posts/create', postObject)
+    .then(response => {
+      console.log(response);
+      return response;
+    })
+    .catch(error => console.log(error));
   }
 
-  componentDidMount() {
-    fetch('/api')
-      .then(res => res.json())
-      .then(list => this.setState(
-        {
-          message: list
-        }
-      ));
-  }
-
-  render() {
-    return(
-      <div className="RequestHandler">
-        {this.state.message.map(message => <div>{message.text}</div>)}
-      </div>
-    );
+  static sendGetPosts() {
+    return axios.get('http://localhost:3000/api/posts')
+    .then(response => {
+      console.log(response);
+      return response;
+    })
+    .catch(error => console.log(error));
   }
 }
 

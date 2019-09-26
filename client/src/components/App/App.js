@@ -17,16 +17,32 @@ class App extends React.Component {
 
     this.state = {
       posts: []
-    };
+    }
 
-    this.addPost = this.addPost.bind(this);
+    this.updatePosts = this.updatePosts.bind(this);
   }
 
-  addPost(post) {
-    this.setState({
-      posts: [...this.state.posts, post]
+  componentDidMount() {
+    this.updatePosts();
+  }
+
+  updatePosts() {
+    RequestHandler.sendGetPosts()
+    .then(response => {
+      this.setState({
+        posts: response.data
+      });
+    })
+    .catch(error => {
+      console.log(error);
     });
   }
+
+  // addPost(post) {
+  //   this.setState({
+  //     posts: [...this.state.posts, post]
+  //   });
+  // }
 
   render() {
     return (
@@ -39,8 +55,8 @@ class App extends React.Component {
                 <Route exact path="/" component={CarouselContainer}/>
                 <Route path="/bio" component={AboutMe} />
                 <Route path="/posts" render={(props) => <Posts {...props} postsArray={this.state.posts}/>}/>
-                <Route path="/create" render={(props) => <CreatePostForm {...props} addToPosts={this.addPost} />} />
-                <Route path="/api-test" component={RequestHandler} />
+                <Route path="/create" render={(props) => <CreatePostForm {...props} callback={this.updatePosts} />}/>
+                <Route path="/test" component={TestAPI} />
                 <Route component={NotFound} />
               </Switch>
             </div>
@@ -54,13 +70,23 @@ class App extends React.Component {
   }
 }
 
+class TestAPI extends React.Component {
+  render() {
+    return (
+      <div className="TestAPI">
+        <button onClick={RequestHandler.sendGetPosts}>Get Posts</button>
+      </div>
+    );
+  }
+}
+
 class Posts extends React.Component {
   render() {
     return (
       <div className="Posts">
         <PostsHeader />
         {this.props.postsArray.map((post) => 
-          <BlogPost 
+          <BlogPost key={post.id}
           title={post.title} 
           author={post.author} 
           date={post.date}
