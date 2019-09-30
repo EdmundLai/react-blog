@@ -12,6 +12,8 @@ router.get('/', function(req, res, next) {
 
 router.post('/posts/create', postController.createPost);
 
-router.get('/posts', postController.getPosts);
+router.get('/posts', postController.getAllPosts);
+
+router.delete('/posts/delete', postController.deletePost);
 
 module.exports = router;

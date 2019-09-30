@@ -34,8 +34,7 @@ class CreatePostForm extends React.Component {
       let post = Object.assign({}, prevState.post);
       post[name] = value;
       return { post };
-    }
-    );
+    });
 
     this.setPostDate();
   }
@@ -55,7 +54,7 @@ class CreatePostForm extends React.Component {
 
     // Handling HTTP POST Request
     RequestHandler.sendCreatePost(this.state.post)
-    .then(response => {
+    .then(() => {
       this.props.callback();
     });
 

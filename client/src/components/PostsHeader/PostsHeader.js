@@ -7,9 +7,12 @@ class PostsHeader extends React.Component {
     return (
       <div className="PostsHeader">
         <h2>All Posts</h2>
-        <Link to="/create">
-          <button>New Post...</button>
-        </Link>
+        <div className="Side Buttons">
+          <Link to="/create">
+            <button>New Post...</button>
+          </Link>
+        </div>
+        
       </div>
     );
   }

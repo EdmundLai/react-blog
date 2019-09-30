@@ -40,22 +40,22 @@ function createPostsTable() {
     date varchar(255) NOT NULL,
     description varchar(255) NOT NULL,
     content varchar(1000) NOT NULL
-  )`;
+  )`;  
 
   let database = new Database(config);
 
-  database.query(createTable)
-  .then(response => {
+  return database.query(createTable)
+  .then(() => {
     database.close();
-    return response;
   })
   .catch(err => {
     database.close();
-    console.log(err);
+    throw err;
   });
 
 }
 
+// SQL query for adding post into database
 function insertPost(post) {
   let insertSQL = `INSERT INTO posts(title, author, date, description, content)
   VALUES(?, ?, ?, ?, ?)`;
@@ -66,41 +66,123 @@ function insertPost(post) {
 
   database.query(insertSQL, post_array)
   .catch(err => {
-    datanase.close();
-    console.log(err);
+    database.close();
+    throw err;
   });
 }
 
-function getPosts() {
+// SQL query for getting all posts from database
+function getAllPosts() {
   let selectSQL = 'SELECT * FROM posts';
 
   let database = new Database(config);
 
-  let result = database.query(selectSQL)
+  return database.query(selectSQL)
   .then(response => {
     database.close();
     return response;
   })
   .catch(err => {
     database.close();
-    console.log(err);
+    throw err;
   });
-
-  return result;
 }
 
-exports.getPosts = function(req, res, next) {
-  // res.send("Get Post not implemented yet!");
-  getPosts()
+function getPostIDs() {
+  let selectIDsSQL = 'SELECT id FROM posts';
+
+  let database = new Database(config);
+
+  return database.query(selectIDsSQL)
+  .then((rows) => {
+    database.close();
+    return rows;
+  })
+  .catch(err => {
+    database.close();
+    throw err;
+  });
+}
+
+function updatePost(post, id) {
+  let updateSQL = `UPDATE posts
+  SET title = ?,
+  author = ?,
+  date = ?,
+  description = ?,
+  content = ?
+  WHERE id = ?`;
+
+  let postArray = Object.values(post);
+
+  let updateParams = [...postArray, id];
+
+  let database = new Database(config);
+
+  return database.query(updateSQL, updateParams)
+  .then(() => {
+    database.close();
+  })
+  .catch(err => {
+    database.close();
+    throw err;
+  });
+}
+
+function deletePost(id) {
+  let deleteSQL = 'DELETE FROM posts WHERE id = ?';
+
+  let database = new Database(config);
+
+  return database.query(deleteSQL, id)
+  .then((rows) => {
+    let numRows = rows.affectedRows;
+    // console.log(`numRows: ${numRows}`);
+    
+    return new Promise((resolve, reject) => {
+      if(numRows === 1) {
+        database.close();
+        resolve(`Row with id ${id} deleted.`);
+      } else if(numRows === 0) {
+        reject('No rows affected!');
+        return;
+      } else {
+        reject('Number of rows affected is not 0 or 1.');
+        return;
+      }
+    });
+  })
+  .catch(err => {
+    database.close();
+    throw err;
+  });
+}
+
+exports.databaseInit = function() {
+  let database = new Database(config);
+
+  let createDatabase = 'CREATE DATABASE IF NOT EXISTS react_blog';
+
+  database.query(createDatabase)
+  .then(() => {
+    return createPostsTable();
+  })
+  .catch(err => {
+    throw err;
+  })
+}
+
+exports.getAllPosts = function(req, res, next) {
+  getAllPosts()
   .then(posts => {
     res.send(posts);
   })
-  .catch(err => err);
-
+  .catch(err => {
+    throw err;
+  });
 }
 
 exports.createPost = function(req, res, next) {
-  // res.send("Create Post not implemented yet!");
   // createPostsTable();
 
   console.log(req.body);
@@ -108,4 +190,14 @@ exports.createPost = function(req, res, next) {
   insertPost(req.body);
 
   res.send("Post successfully created!");
+}
+
+exports.deletePost = function(req, res, next) {
+  console.log(`id to be deleted: ${req.query.id}`);
+
+  deletePost(req.query.id)
+  .then(() => res.send(`post with id: ${req.query.id} deleted successfully!`))
+  .catch(() => {
+    res.send(`post with id ${req.query.id} was not able to be deleted.`);
+  });
 }
