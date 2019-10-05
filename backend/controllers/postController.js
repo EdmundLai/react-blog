@@ -88,6 +88,7 @@ function getAllPosts() {
   });
 }
 
+// has not been tested yet
 function getPostIDs() {
   let selectIDsSQL = 'SELECT id FROM posts';
 
@@ -104,6 +105,7 @@ function getPostIDs() {
   });
 }
 
+// has not been tested yet
 function updatePost(post, id) {
   let updateSQL = `UPDATE posts
   SET title = ?,
@@ -178,6 +180,7 @@ exports.getAllPosts = function(req, res, next) {
     res.send(posts);
   })
   .catch(err => {
+    console.error(err);
     throw err;
   });
 }
@@ -192,6 +195,12 @@ exports.createPost = function(req, res, next) {
   res.send("Post successfully created!");
 }
 
+exports.updatePost = function(req, res, next) {
+  res.send('updatePost not implemented yet!');
+
+  // some call to updatePost()
+}
+
 exports.deletePost = function(req, res, next) {
   console.log(`id to be deleted: ${req.query.id}`);
 
@@ -199,5 +208,16 @@ exports.deletePost = function(req, res, next) {
   .then(() => res.send(`post with id: ${req.query.id} deleted successfully!`))
   .catch(() => {
     res.send(`post with id ${req.query.id} was not able to be deleted.`);
+  });
+}
+
+exports.getPostIDs = function(req, res, next) {
+  return getPostIDs()
+  .then(rows => {
+    res.send(rows);
+  })
+  .catch(err => {
+    console.error(err);
+    throw err;
   });
 }

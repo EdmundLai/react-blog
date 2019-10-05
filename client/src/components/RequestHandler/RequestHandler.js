@@ -11,12 +11,15 @@ class RequestHandler {
 
   static sendGetPosts() {
     return axios.get('http://localhost:3000/api/posts')
-    .then(response => {
-      // console.log(response);
-      return response;
-    })
     .catch(error => {
-      console.log(error);
+      console.error(error);
+    });
+  }
+
+  static sendGetIDs() {
+    return axios.get('http://localhost:3000/api/posts/ids')
+    .catch(error => {
+      console.error(error);
     });
   }
 
@@ -26,7 +29,7 @@ class RequestHandler {
       console.log(response.data);
     })
     .catch(error => {
-      console.log(error);
+      console.error(error);
     })
 
   }

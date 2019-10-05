@@ -2,6 +2,8 @@ import React from 'react';
 import {Redirect} from 'react-router-dom';
 import {getDateAsString} from '../../utils/DateUtils';
 import RequestHandler from '../RequestHandler/RequestHandler';
+import Input from '../Input/Input';
+import TextArea from '../TextArea/TextArea';
 import './CreatePostForm.css';
 
 class CreatePostForm extends React.Component {
@@ -97,36 +99,6 @@ class CreatePostForm extends React.Component {
         />
         <input type="submit" value="Add Post"/>
       </form>
-    );
-  }
-}
-
-class Input extends React.Component {
-  render() {
-    return(
-      <label>
-        {this.props.label}
-        <input 
-          name={this.props.name}
-          type="text"
-          value={this.props.value} 
-          onChange={this.props.onChange} />
-      </label>
-    );
-  }
-}
-
-class TextArea extends React.Component {
-  render() {
-    return (
-      <label>
-        {this.props.label}
-        <textarea 
-          name={this.props.name} 
-          type="text" 
-          value={this.props.value} 
-          onChange={this.props.onChange} />
-      </label>
     );
   }
 }
