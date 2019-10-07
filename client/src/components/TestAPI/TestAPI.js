@@ -26,6 +26,17 @@ class TestAPI extends React.Component {
     });
   }
 
+  callGetPostByID(id) {
+    console.log('callGetPostByID called!');
+    RequestHandler.sendGetPostByID(id)
+    .then(response => {
+      console.log(response.data);
+    })
+    .catch(err => {
+      console.error(err);
+    });
+  }
+
   callGetPostIDs() {
     console.log('callGetPostIDs called!');
     RequestHandler.sendGetIDs()
@@ -73,6 +84,7 @@ class TestAPI extends React.Component {
         <button onClick={() => this.callDeletePost(this.state.id_selected)}>Delete Post</button>
         <input type="text" value={this.state.id_selected} onChange={this.onChange}/>
         <button onClick={this.callGetPostIDs}>Get IDs of posts</button>
+        <button onClick={() => this.callGetPostByID(3)}>Get Post by ID (id = 3)</button>
         {this.state.ids.map(id => 
           <p key={id}>{id}</p>
         )}

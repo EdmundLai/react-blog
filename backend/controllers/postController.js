@@ -88,7 +88,23 @@ function getAllPosts() {
   });
 }
 
-// has not been tested yet
+// SQL query for getting one post by id from database
+function getPostByID(id) {
+  let selectByIDSQL = 'SELECT * FROM posts WHERE id = ?';
+
+  let database = new Database(config);
+
+  return database.query(selectByIDSQL, id)
+  .then(response => {
+    database.close();
+    return response;
+  })
+  .catch(err => {
+    database.close();
+    throw err;
+  });
+}
+
 function getPostIDs() {
   let selectIDsSQL = 'SELECT id FROM posts';
 
@@ -208,6 +224,18 @@ exports.deletePost = function(req, res, next) {
   .then(() => res.send(`post with id: ${req.query.id} deleted successfully!`))
   .catch(() => {
     res.send(`post with id ${req.query.id} was not able to be deleted.`);
+  });
+}
+
+exports.getPostByID = function(req, res, next) {
+  console.log(`post with id ${req.query.id} to be retrieved`);
+
+  getPostByID(req.query.id)
+  .then(row => {
+    res.send(row);
+  })
+  .catch(() => {
+    res.send(`post with id ${req.query.id} could not be retrieved`)
   });
 }
 

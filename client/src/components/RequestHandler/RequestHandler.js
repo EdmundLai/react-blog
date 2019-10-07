@@ -30,8 +30,15 @@ class RequestHandler {
     })
     .catch(error => {
       console.error(error);
-    })
+    });
 
+  }
+
+  static sendGetPostByID(id) {
+    return axios.get(`http://localhost:3000/api/posts/get?id=${id}`)
+    .catch(error => {
+      console.error(error);
+    });
   }
 }
 
