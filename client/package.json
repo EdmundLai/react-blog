@@ -14,7 +14,7 @@
     "react-scripts": "^3.1.1"
   },
   "scripts": {
-    "dev": "concurrently \"react-scripts start\" \"cd ../backend && nodemon\"",
+    "dev": "concurrently \"react-scripts start\" \"cd ../backend && npm run nodemon\"",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
