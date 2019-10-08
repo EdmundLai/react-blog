@@ -8,10 +8,9 @@ import AboutMe from '../AboutMe/AboutMe';
 import CreatePostForm from '../CreatePostForm/CreatePostForm';
 import CarouselContainer from '../CarouselContainer/CarouselContainer';
 import RequestHandler from '../RequestHandler/RequestHandler';
-// import HelloPost from '../HelloPost/HelloPost';
+import PostPage from '../PostPage/PostPage';
 
 import './App.css';
-import BlogPost from '../BlogPost/BlogPost';
 
 class App extends React.Component {
   constructor(props) {
@@ -53,7 +52,7 @@ class App extends React.Component {
                 <Route exact path="/" component={CarouselContainer}/>
                 <Route path="/bio" component={AboutMe} />
                 <Route exact path="/posts" render={(props) => <Posts {...props} postsArray={this.state.posts}/>}/>
-                <Route path="/posts/:postID" component={BlogPost} />
+                <Route path="/posts/:postID" render={props => <PostPage {...props} callback={this.updatePosts}/>}/>
                 <Route path="/create" render={(props) => <CreatePostForm {...props} callback={this.updatePosts} />}/>
                 <Route path="/test" render={(props) => <TestAPI {...props} callback={this.updatePosts} />} />
                 <Route component={NotFound} />

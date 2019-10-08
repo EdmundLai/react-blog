@@ -12,8 +12,6 @@ class PostCard extends React.Component {
         </h2>
         <div>{this.props.author}</div>
         <div>{this.props.date}</div>
-
-        
       </div>
     );
   }
