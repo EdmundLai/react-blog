@@ -1,12 +1,12 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
-import {getDateAsString} from '../../utils/DateUtils';
+// import {getDateAsString} from '../../utils/DateUtils';
 import RequestHandler from '../RequestHandler/RequestHandler';
 import Input from '../Input/Input';
 import TextArea from '../TextArea/TextArea';
-import './CreatePostForm.css';
+import './UpdatePostForm.css';
 
-class CreatePostForm extends React.Component {
+class UpdatePostForm extends React.Component {
   constructor(props) {
     super(props);
 
@@ -18,12 +18,43 @@ class CreatePostForm extends React.Component {
         content: "",
         date: ""
       },
-      goToPosts: false
+      goToPosts: false,
+      formLoaded: false
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.setPostDate = this.setPostDate.bind(this);
+    // this.setPostDate = this.setPostDate.bind(this);
+  }
+
+  componentDidMount() {
+    RequestHandler.sendGetPostByID(this.props.match.params.postID)
+    .then(response => {
+      console.log("get post by id succeeded!");
+      if(response.data.length === 1) {
+        console.log("data length is 1!");
+        let postObj = response.data[0];
+        let newPost = {
+          title: postObj.title,
+          author: postObj.author,
+          description: postObj.description,
+          content: postObj.content,
+          date: postObj.date
+        }
+
+        this.setState({
+          post: newPost
+        });
+      }
+    })
+    .then(() => {
+      this.setState({
+        formLoaded: true
+      });
+    })
+    .catch(err => {
+      console.error(err);
+    });
   }
 
   handleInputChange(event) {
@@ -38,24 +69,23 @@ class CreatePostForm extends React.Component {
       return { post };
     });
 
-    this.setPostDate();
+    // not updating PostDate with Update
+    // this.setPostDate();
   }
 
-  setPostDate() {
-    let currentDate = getDateAsString();
-    this.setState(prevState => {
-      let post = Object.assign({}, prevState.post);
-      post.date = currentDate;
-      return { post };
-    });
-  }
+  // setPostDate() {
+  //   let currentDate = getDateAsString();
+  //   this.setState(prevState => {
+  //     let post = Object.assign({}, prevState.post);
+  //     post.date = currentDate;
+  //     return { post };
+  //   });
+  // }
 
   handleSubmit(event) {
-    // using database instead of client storage
-    // this.props.addToPosts(this.state.post);
-
-    // Handling HTTP POST Request
-    RequestHandler.sendCreatePost(this.state.post)
+    // Handling HTTP PUT Request
+    let postID = this.props.match.params.postID;
+    RequestHandler.sendUpdatePost(this.state.post, postID)
     .then(() => {
       this.props.callback();
     })
@@ -67,6 +97,7 @@ class CreatePostForm extends React.Component {
     .catch(err => {
       console.error(err);
     });
+
     
     event.preventDefault();
   }
@@ -76,8 +107,12 @@ class CreatePostForm extends React.Component {
       return <Redirect to="/posts"/>
     }
 
+    if(!this.state.formLoaded) {
+      return <div>Loading...</div>
+    }
+
     return (
-      <form className="CreatePostForm" onSubmit={this.handleSubmit}>
+      <form className="UpdatePostForm" onSubmit={this.handleSubmit}>
         <Input
           label="Post Title"
           name="title"
@@ -102,10 +137,10 @@ class CreatePostForm extends React.Component {
           value={this.state.post.content}
           onChange={this.handleInputChange}
         />
-        <input type="submit" value="Add Post"/>
+        <input type="submit" value="Update Post"/>
       </form>
     );
   }
 }
 
-export default CreatePostForm;
+export default UpdatePostForm;

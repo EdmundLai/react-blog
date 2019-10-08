@@ -2,29 +2,43 @@ import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import FooterInfo from '../FooterInfo/FooterInfo';
 import AppHeader from '../AppHeader/AppHeader';
-import PostsHeader from '../PostsHeader/PostsHeader';
-import BlogPost from '../BlogPost/BlogPost';
-import AboutMe from '../AboutMe/AboutMe'
-import CreatePostForm from '../CreatePostForm/CreatePostForm'
-import CarouselContainer from '../CarouselContainer/CarouselContainer'
+import Posts from '../Posts/Posts';
+import TestAPI from '../TestAPI/TestAPI';
+import AboutMe from '../AboutMe/AboutMe';
+import CreatePostForm from '../CreatePostForm/CreatePostForm';
+import CarouselContainer from '../CarouselContainer/CarouselContainer';
+import RequestHandler from '../RequestHandler/RequestHandler';
+import PostPage from '../PostPage/PostPage';
+import UpdatePostForm from '../UpdatePostForm/UpdatePostForm';
 
-// import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher'
 import './App.css';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
+    // need to find a way to keep state updated consistently
+    // may use redux to manage state
     this.state = {
       posts: []
-    };
+    }
 
-    this.addPost = this.addPost.bind(this);
+    this.updatePosts = this.updatePosts.bind(this);
   }
 
-  addPost(post) {
-    this.setState({
-      posts: [...this.state.posts, post]
+  componentDidMount() {
+    this.updatePosts();
+  }
+
+  updatePosts() {
+    RequestHandler.sendGetPosts()
+    .then(response => {
+      this.setState({
+        posts: response.data
+      });
+    })
+    .catch(error => {
+      console.log(error);
     });
   }
 
@@ -38,10 +52,14 @@ class App extends React.Component {
               <Switch>
                 <Route exact path="/" component={CarouselContainer}/>
                 <Route path="/bio" component={AboutMe} />
-                <Route path="/posts" render={(props) => <Posts {...props} postsArray={this.state.posts}/>}/>
-                <Route path="/create" render={(props) => <CreatePostForm {...props} addToPosts={this.addPost} />} />
+                <Route exact path="/posts" render={(props) => <Posts {...props} postsArray={this.state.posts}/>}/>
+                <Route path="/posts/:postID" render={props => <PostPage {...props} callback={this.updatePosts}/>}/>
+                <Route path="/create" render={(props) => <CreatePostForm {...props} callback={this.updatePosts} />}/>
+                <Route path="/update/:postID" render={props => <UpdatePostForm {...props} callback={this.updatePosts}/>} />
+                <Route path="/test" render={(props) => <TestAPI {...props} callback={this.updatePosts} />} />
+                <Route component={NotFound} />
               </Switch>
-            </div>       
+            </div>
           </main>
           <footer className="App-footer">
             <FooterInfo />
@@ -50,17 +68,14 @@ class App extends React.Component {
       </Router>
     );
   }
-    
-  
 }
 
-class Posts extends React.Component {
+
+class NotFound extends React.Component {
   render() {
-    return (
-      <div className="Posts">
-        <PostsHeader />
-        {this.props.postsArray.map(
-          (post) => <BlogPost title={post.title} author={post.author} date="January 1, 2000" content={post.content}/>)}
+    return(
+      <div className="NotFound">
+        <h2>404 PAGE NOT FOUND</h2>
       </div>
     );
   }
