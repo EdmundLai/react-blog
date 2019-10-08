@@ -131,9 +131,7 @@ function updatePost(post, id) {
   content = ?
   WHERE id = ?`;
 
-  let postArray = Object.values(post);
-
-  let updateParams = [...postArray, id];
+  let updateParams = [post.title, post.author, post.date, post.description, post.content, id];
 
   let database = new Database(config);
 
@@ -211,12 +209,6 @@ exports.createPost = function(req, res, next) {
   res.send("Post successfully created!");
 }
 
-exports.updatePost = function(req, res, next) {
-  res.send('updatePost not implemented yet!');
-
-  // some call to updatePost()
-}
-
 exports.deletePost = function(req, res, next) {
   console.log(`id to be deleted: ${req.query.id}`);
 
@@ -236,6 +228,19 @@ exports.getPostByID = function(req, res, next) {
   })
   .catch(() => {
     res.send(`post with id ${req.query.id} could not be retrieved`)
+  });
+}
+
+exports.updatePost = function(req, res, next) {
+  console.log(`post with id ${req.query.id} to be updated`);
+
+  updatePost(req.body, req.query.id)
+  .then(() => {
+    res.send(`post with id ${req.query.id} successfully updated!`);
+  })
+  .catch(err => {
+    console.error(err);
+    res.send(`post with id ${req.query.id} not updated.`);
   });
 }
 

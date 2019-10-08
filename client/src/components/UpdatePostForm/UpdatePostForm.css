@@ -1,0 +1,4 @@
+.UpdatePostForm {
+  display: flex;
+  flex-direction: column;
+}

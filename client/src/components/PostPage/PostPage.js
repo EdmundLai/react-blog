@@ -1,7 +1,7 @@
 import React from 'react';
 import BlogPost from '../BlogPost/BlogPost';
 import RequestHandler from '../RequestHandler/RequestHandler';
-import {Redirect} from 'react-router-dom';
+import {Redirect, Link} from 'react-router-dom';
 
 class PostPage extends React.Component {
   render() {
@@ -45,6 +45,9 @@ class PostOptions extends React.Component {
     return(
       <div className="PostOptions">
         <button onClick={this.deletePost}>Delete Post</button>
+        <Link to={`/update/${this.props.match.params.postID}`}>
+          <button>Update Post</button>
+        </Link>
       </div>
     );
   }
