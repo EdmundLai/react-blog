@@ -12,7 +12,11 @@ router.get('/', function(req, res, next) {
 
 router.post('/posts/create', postController.createPost);
 
+router.put('/posts/update', postController.updatePost);
+
 router.get('/posts', postController.getAllPosts);
+
+router.get('/posts/get', postController.getPostByID);
 
 router.get('/posts/ids', postController.getPostIDs);
 

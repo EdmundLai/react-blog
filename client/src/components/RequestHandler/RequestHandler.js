@@ -9,6 +9,16 @@ class RequestHandler {
     .catch(error => console.log(error));
   }
 
+  static sendUpdatePost(postObject, id) {
+    return axios.put(`http://localhost:3000/api/posts/update?id=${id}`, postObject)
+    .then(response => {
+      console.log(response.data);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  }
+
   static sendGetPosts() {
     return axios.get('http://localhost:3000/api/posts')
     .catch(error => {
@@ -30,8 +40,15 @@ class RequestHandler {
     })
     .catch(error => {
       console.error(error);
-    })
+    });
 
+  }
+
+  static sendGetPostByID(id) {
+    return axios.get(`http://localhost:3000/api/posts/get?id=${id}`)
+    .catch(error => {
+      console.error(error);
+    });
   }
 }
 

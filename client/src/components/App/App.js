@@ -8,6 +8,8 @@ import AboutMe from '../AboutMe/AboutMe';
 import CreatePostForm from '../CreatePostForm/CreatePostForm';
 import CarouselContainer from '../CarouselContainer/CarouselContainer';
 import RequestHandler from '../RequestHandler/RequestHandler';
+import PostPage from '../PostPage/PostPage';
+import UpdatePostForm from '../UpdatePostForm/UpdatePostForm';
 
 import './App.css';
 
@@ -50,8 +52,10 @@ class App extends React.Component {
               <Switch>
                 <Route exact path="/" component={CarouselContainer}/>
                 <Route path="/bio" component={AboutMe} />
-                <Route path="/posts" render={(props) => <Posts {...props} postsArray={this.state.posts}/>}/>
+                <Route exact path="/posts" render={(props) => <Posts {...props} postsArray={this.state.posts}/>}/>
+                <Route path="/posts/:postID" render={props => <PostPage {...props} callback={this.updatePosts}/>}/>
                 <Route path="/create" render={(props) => <CreatePostForm {...props} callback={this.updatePosts} />}/>
+                <Route path="/update/:postID" render={props => <UpdatePostForm {...props} callback={this.updatePosts}/>} />
                 <Route path="/test" render={(props) => <TestAPI {...props} callback={this.updatePosts} />} />
                 <Route component={NotFound} />
               </Switch>

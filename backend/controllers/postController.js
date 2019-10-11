@@ -88,7 +88,23 @@ function getAllPosts() {
   });
 }
 
-// has not been tested yet
+// SQL query for getting one post by id from database
+function getPostByID(id) {
+  let selectByIDSQL = 'SELECT * FROM posts WHERE id = ?';
+
+  let database = new Database(config);
+
+  return database.query(selectByIDSQL, id)
+  .then(response => {
+    database.close();
+    return response;
+  })
+  .catch(err => {
+    database.close();
+    throw err;
+  });
+}
+
 function getPostIDs() {
   let selectIDsSQL = 'SELECT id FROM posts';
 
@@ -115,9 +131,7 @@ function updatePost(post, id) {
   content = ?
   WHERE id = ?`;
 
-  let postArray = Object.values(post);
-
-  let updateParams = [...postArray, id];
+  let updateParams = [post.title, post.author, post.date, post.description, post.content, id];
 
   let database = new Database(config);
 
@@ -195,12 +209,6 @@ exports.createPost = function(req, res, next) {
   res.send("Post successfully created!");
 }
 
-exports.updatePost = function(req, res, next) {
-  res.send('updatePost not implemented yet!');
-
-  // some call to updatePost()
-}
-
 exports.deletePost = function(req, res, next) {
   console.log(`id to be deleted: ${req.query.id}`);
 
@@ -208,6 +216,31 @@ exports.deletePost = function(req, res, next) {
   .then(() => res.send(`post with id: ${req.query.id} deleted successfully!`))
   .catch(() => {
     res.send(`post with id ${req.query.id} was not able to be deleted.`);
+  });
+}
+
+exports.getPostByID = function(req, res, next) {
+  console.log(`post with id ${req.query.id} to be retrieved`);
+
+  getPostByID(req.query.id)
+  .then(row => {
+    res.send(row);
+  })
+  .catch(() => {
+    res.send(`post with id ${req.query.id} could not be retrieved`)
+  });
+}
+
+exports.updatePost = function(req, res, next) {
+  console.log(`post with id ${req.query.id} to be updated`);
+
+  updatePost(req.body, req.query.id)
+  .then(() => {
+    res.send(`post with id ${req.query.id} successfully updated!`);
+  })
+  .catch(err => {
+    console.error(err);
+    res.send(`post with id ${req.query.id} not updated.`);
   });
 }
 
