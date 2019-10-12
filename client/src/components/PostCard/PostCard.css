@@ -1,0 +1,18 @@
+.PostCard {
+  border: solid 0.1em;
+  margin-bottom: 1em;
+  padding: 0 1em 1em 1em;
+}
+
+.PostCard a {
+  color: black;
+  text-decoration-color: #979797;
+}
+
+.PostCard a:hover {
+  text-decoration-color: black;
+}
+
+.PostCardSubtitle {
+  color: #575757;
+}

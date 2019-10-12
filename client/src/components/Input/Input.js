@@ -3,7 +3,7 @@ import React from 'react';
 class Input extends React.Component {
   render() {
     return(
-      <label>
+      <label className="Input">
         {this.props.label}
         <input 
           name={this.props.name}

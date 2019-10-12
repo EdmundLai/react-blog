@@ -8,16 +8,16 @@ class Posts extends React.Component {
       <div className="Posts">
         
         <PostsHeader />
-        {this.props.postsArray.map((post) => 
-          <PostCard
-          key={post.id}
-          title={post.title}
-          author={post.author}
-          date={post.date}
-          id={post.id}
-          match={this.props.match}
-          />
-        )}
+          {this.props.postsArray.map((post) => 
+            <PostCard
+            key={post.id}
+            title={post.title}
+            author={post.author}
+            date={post.date}
+            id={post.id}
+            match={this.props.match}
+            />
+          )}
       </div>
     );
   }
